@@ -12,7 +12,7 @@ import com.example.newsaggregator.R
 import com.example.newsaggregator.databinding.ArticleListItemBinding
 import com.example.newsaggregator.feature_news_main.data.repository.models.Article
 
-class ArticleListAdapter(private val onClickItem: () -> Unit = {} ) :
+class ArticleListAdapter(private val onClickItem: (url: String) -> Unit = {}) :
     RecyclerView.Adapter<ArticleListAdapter.ArticleViewHolder>() {
 
     var articleList = emptyList<Article>()
@@ -44,21 +44,19 @@ class ArticleListAdapter(private val onClickItem: () -> Unit = {} ) :
             itemView.findViewById<TextView>(R.id.published_date)
 
 
-        init {
-            itemView.setOnClickListener {
-                onClickItem()
-            }
-        }
-
         fun onBind(article: Article) {
             Glide.with(itemView.context)
                 .load(article.imageUrl)
                 .error(R.drawable.ic_newspaper)
                 .into(articleCoverIV)
             articleTitleTV.text = article.title
-            articleCategoriesTV.text = article.categories.joinToString("# ")
+            articleCategoriesTV.text = '#' + article.categories.joinToString("# ")
             creatorTV.text = article.creator
             publishedDateTV.text = article.publishedDate
+
+            itemView.setOnClickListener {
+                onClickItem(article.link)
+            }
         }
     }
 
@@ -76,3 +74,4 @@ class ArticleListAdapter(private val onClickItem: () -> Unit = {} ) :
         holder.onBind(articleList[position])
     }
 }
+

@@ -4,71 +4,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/surface">
+    android:background="@color/surfaceContainer"
+    android:padding="8dp">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/article_cover"
-        android:layout_width="0dp"
-        android:layout_height="140dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:contentDescription="@string/news_cover_content_desc"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_newspaper" />
+        app:shapeAppearanceOverlay="@style/RoundedImageView"
+        tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/article_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
         android:ellipsize="end"
         android:maxLines="2"
-        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
         android:textColor="@color/onSurface"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/article_cover"
+        app:layout_constraintStart_toEndOf="@id/article_cover"
+        app:layout_constraintTop_toTopOf="@+id/article_cover"
         tools:text="@tools:sample/lorem/random" />
 
     <TextView
         android:id="@+id/categories"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:maxLines="2"
-        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
         android:textColor="@color/onSurface"
+        app:layout_constraintBottom_toBottomOf="@+id/article_cover"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/article_title"
-        tools:text="#FilmIndustry #Film #Business #Culture #RyanCoogler #TomCruise #ChristopherNolan" />
+        app:layout_constraintStart_toEndOf="@id/article_cover"
+        app:layout_constraintTop_toBottomOf="@id/article_title"
+        tools:text="@tools:sample/lorem/random" />
 
     <TextView
         android:id="@+id/creator"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
         android:textAppearance="@style/TextAppearance.Material3.BodySmall"
         android:textColor="@color/onSurfaceVariant"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/published_date"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categories"
-        tools:text="Jesse Hassenger" />
+        app:layout_constraintTop_toBottomOf="@id/article_cover"
+        tools:text="@tools:sample/lorem" />
 
     <TextView
         android:id="@+id/published_date"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
-        android:textColor="@color/onSurface"
+        android:gravity="end"
+        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+        android:textColor="@color/onSurfaceVariant"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/creator"
-        app:layout_constraintTop_toTopOf="@+id/creator"
-        tools:text="20 мая 2025" />
+        app:layout_constraintTop_toTopOf="@id/creator"
+        tools:text="@tools:sample/date/ddmmyy" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

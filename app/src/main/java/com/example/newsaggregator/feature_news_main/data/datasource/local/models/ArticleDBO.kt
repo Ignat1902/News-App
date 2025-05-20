@@ -18,7 +18,7 @@ data class ArticleDBO(
     @ColumnInfo(name = "description")
     val description: String,
     @ColumnInfo(name = "pub_date")
-    val pubDate: String,
+    val pubDate: Long,
     @ColumnInfo(name = "creator")
     val creator: String,
 )

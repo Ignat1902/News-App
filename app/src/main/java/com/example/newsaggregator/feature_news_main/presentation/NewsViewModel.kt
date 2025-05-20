@@ -34,7 +34,6 @@ class NewsViewModel @Inject constructor(
 
     fun getNews() {
         viewModelScope.launch {
-            delay(1000L)
             getNewsUseCase.execute("international")
                 .onEach { result ->
                     when (result) {
@@ -62,6 +61,7 @@ class NewsViewModel @Inject constructor(
                                 articles = result.data ?: emptyList(),
                                 isLoading = true
                             )
+                            delay(1000L)
                         }
                     }
                 }.launchIn(this)

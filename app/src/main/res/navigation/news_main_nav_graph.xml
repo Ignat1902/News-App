@@ -2,11 +2,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/news_main_nav_graph"
-    app:startDestination="@id/newsMainFragment">
+    app:startDestination="@id/news_main_fragment">
 
-    <fragment
-        android:id="@+id/newsMainFragment"
+    <!--<fragment
+        android:id="@+id/news_main_fragment"
         android:name="com.example.newsaggregator.feature_news_main.presentation.NewsMainFragment">
-    </fragment>
+        <action android:id="@+id/navigate_to_details_fragment" app:destination="@+id/"
+    </fragment>-->
 
 </navigation>

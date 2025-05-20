@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsaggregator.databinding.FragmentNewsMainBinding
 import com.example.newsaggregator.feature_news_main.presentation.recyclerview.ArticleListAdapter
@@ -21,7 +23,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class NewsMainFragment : Fragment() {
 
-    private val viewModel: NewsViewModel by viewModels()
+    private val viewModel: NewsViewModel by activityViewModels()
 
     private var _binding: FragmentNewsMainBinding? = null
     private val binding get() = _binding!!
@@ -37,7 +39,12 @@ class NewsMainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ArticleListAdapter()
+        val navController = findNavController()
+        val adapter =
+            ArticleListAdapter { url ->
+                navigateToArticleDetail(url, navController)
+            }
+
         binding.newsRecyclerView.adapter = adapter
 
         val swipeRefresh = binding.swipeRefresh
@@ -51,7 +58,7 @@ class NewsMainFragment : Fragment() {
         recyclerView.let {
             it.layoutManager = LinearLayoutManager(requireContext())
             it.adapter = adapter
-            it.addItemDecoration(NewsListItemDecoration(bottomOffset = 100))
+            it.addItemDecoration(NewsListItemDecoration(bottomOffset = 12))
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -88,4 +95,11 @@ class NewsMainFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+}
+
+fun navigateToArticleDetail(url: String, navController: NavController) {
+    val action = NewsMainFragmentDirections.navigateToDetailsFragment(
+        url
+    )
+    navController.navigate(action)
 }

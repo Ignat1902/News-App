@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/news_detail_fragment"
+    android:id="@+id/news_detail_nav_graph">
+
+    <fragment
+        android:id="@+id/news_detail_fragment"
+        android:name="com.example.newsaggregator.feature_detail_news.presentation.DetailNewsFragment">
+
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
+
+</navigation>

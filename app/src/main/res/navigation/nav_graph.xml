@@ -2,8 +2,27 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/news_main_nav_graph">
+    app:startDestination="@id/news_main_fragment">
 
-    <include app:graph="@navigation/news_main_nav_graph" />
+    <fragment
+        android:id="@+id/news_main_fragment"
+        android:name="com.example.newsaggregator.feature_news_main.presentation.NewsMainFragment">
+        <action
+            android:id="@+id/navigate_to_details_fragment"
+            app:destination="@+id/news_detail_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/news_detail_fragment"
+        android:name="com.example.newsaggregator.feature_detail_news.presentation.DetailNewsFragment">
+
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
+
+    <!--<include app:graph="@navigation/news_main_nav_graph" />
+
+    <include app:graph="@navigation/news_detail_nav_graph" />-->
 
 </navigation>
