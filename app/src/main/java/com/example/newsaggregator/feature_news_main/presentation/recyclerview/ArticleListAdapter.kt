@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newsaggregator.R
+import com.example.newsaggregator.core.util.toDateUi
 import com.example.newsaggregator.databinding.ArticleListItemBinding
 import com.example.newsaggregator.feature_news_main.data.repository.models.Article
 
@@ -52,7 +53,7 @@ class ArticleListAdapter(private val onClickItem: (url: String) -> Unit = {}) :
             articleTitleTV.text = article.title
             articleCategoriesTV.text = '#' + article.categories.joinToString("# ")
             creatorTV.text = article.creator
-            publishedDateTV.text = article.publishedDate
+            publishedDateTV.text = article.publishedDate.toDateUi()
 
             itemView.setOnClickListener {
                 onClickItem(article.link)

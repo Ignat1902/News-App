@@ -35,7 +35,7 @@ fun ArticleWithCategories.toArticle(): Article {
         description = this.news.description,
         imageUrl = this.news.imageUrl,
         link = this.news.link,
-        publishedDate = this.news.pubDate.toDateUi(),
+        publishedDate = this.news.pubDate,
         creator = this.news.creator,
         categories = this.categories.map { it.name },
     )

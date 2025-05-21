@@ -5,7 +5,7 @@ data class Article(
     val description: String,
     val imageUrl: String,
     val link: String,
-    val publishedDate: String,
+    val publishedDate: Long,
     val creator: String,
     val categories: List<String>,
 )

@@ -8,7 +8,10 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.newsaggregator.MainActivity
+import com.example.newsaggregator.R
 import com.example.newsaggregator.databinding.FragmentDetailNewsBinding
 
 class DetailNewsFragment : Fragment() {
@@ -28,6 +31,13 @@ class DetailNewsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (requireActivity() as MainActivity).binding.topAppBar.apply {
+            setNavigationIcon(R.drawable.ic_arrow_back)
+            setOnClickListener {
+                findNavController().navigateUp()
+            }
+        }
 
         fun setupWebView(url: String) {
             with(binding.webView) {
@@ -59,6 +69,7 @@ class DetailNewsFragment : Fragment() {
         binding.webView.destroy()
         super.onDestroyView()
         _binding = null
+        (requireActivity() as MainActivity).binding.topAppBar.navigationIcon = null
     }
 
 
