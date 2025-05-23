@@ -23,10 +23,7 @@
 ## Скриншоты работы приложения
 
 ### Список новостей
-
-<p align="center">
-  <img src="screenshots/main_screen.png" alt="Список новостей. Главный экран" width="50%"/>
-</p>
+<img src="screenshots/main_screen.png" alt="Список новостей. Главный экран" width="50%"/>
 
 ### Поиск по новостям
 <img src="screenshots/search_query.png" alt="Поиск по новостям в БД" width="50%" />
