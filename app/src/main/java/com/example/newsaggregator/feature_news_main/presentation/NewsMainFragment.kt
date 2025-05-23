@@ -1,6 +1,8 @@
 package com.example.newsaggregator.feature_news_main.presentation
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,7 +68,9 @@ class NewsMainFragment : Fragment() {
         //Обработчик свайпа для обновления данных
         val swipeRefresh = binding.swipeRefresh
         swipeRefresh.setOnRefreshListener {
-            viewModel.getNews()
+            if (viewModel.searchQuery.value.isBlank()){
+                viewModel.getNews()
+            }
             swipeRefresh.isRefreshing = false
         }
 
@@ -100,6 +104,20 @@ class NewsMainFragment : Fragment() {
                 }
             }
         }
+
+        //Обработка поисковых запросов
+        binding.searchEditText.addTextChangedListener(object : TextWatcher {
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val query = s?.toString() ?: ""
+                viewModel.searchQuery.value = query
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun afterTextChanged(p0: Editable?) {}
+
+        })
 
     }
 

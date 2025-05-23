@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".feature_news_main.presentation.NewsMainFragment">
 
+    <EditText
+        android:id="@+id/search_edit_text"
+        style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:background="@drawable/background_edit_text"
+        android:hint="@string/search_hint_text"
+        android:inputType="text"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/dropdown_menu_filter"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -14,12 +30,13 @@
         android:layout_marginHorizontal="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/search_edit_text">
 
         <AutoCompleteTextView
             android:id="@+id/auto_complete_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/background_edit_text"
             android:inputType="none"
             app:simpleItems="@array/simple_items" />
 
@@ -51,17 +68,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/swipe_refresh" />
-
-    <!--
-        <TextView
-            android:id="@+id/error_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@color/error"
-            android:visibility="visible"
-            tools:text="@tools:sample/lorem/random" />
-    -->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

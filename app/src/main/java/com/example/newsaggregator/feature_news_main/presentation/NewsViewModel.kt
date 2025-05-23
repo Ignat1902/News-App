@@ -5,14 +5,17 @@ import androidx.lifecycle.viewModelScope
 import com.example.newsaggregator.core.util.RequestResult
 import com.example.newsaggregator.feature_news_main.data.repository.models.Article
 import com.example.newsaggregator.feature_news_main.domain.GetNewsUseCase
+import com.example.newsaggregator.feature_news_main.domain.SearchNewsUseCase
 import com.example.newsaggregator.feature_news_main.presentation.model.NewsState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -21,10 +24,12 @@ import javax.inject.Inject
 @HiltViewModel
 class NewsViewModel @Inject constructor(
     private val getNewsUseCase: GetNewsUseCase,
+    private val searchNewsUseCase: SearchNewsUseCase,
 ) : ViewModel() {
 
     init {
         getNews()
+        observeSearchQuery()
     }
 
     private val _state: MutableStateFlow<NewsState> = MutableStateFlow(NewsState())
@@ -34,6 +39,10 @@ class NewsViewModel @Inject constructor(
     val eventFlow: SharedFlow<UiEvent> = _eventFlow.asSharedFlow()
 
     private val _filterState = MutableStateFlow(Filter.DESC_DATE)
+
+    val searchQuery = MutableStateFlow("")
+
+    private var searchJob: Job? = null
 
     fun setFilter(filter: Filter) {
         _filterState.value = filter
@@ -46,6 +55,41 @@ class NewsViewModel @Inject constructor(
             val currentArticles = _state.value.articles
             val sortedArticles = sortArticles(currentArticles, _filterState.value)
             _state.value = _state.value.copy(articles = sortedArticles, isLoading = false)
+        }
+    }
+
+    private fun observeSearchQuery() {
+        viewModelScope.launch {
+            searchQuery.collect { query ->
+                searchJob?.cancel()
+                searchJob = launch {
+                    searchNewsUseCase.execute(query).collectLatest { result ->
+                        when (result) {
+                            is RequestResult.Success -> {
+                                _state.value = _state.value.copy(
+                                    articles = sortArticles(
+                                        result.data ?: emptyList(),
+                                        _filterState.value
+                                    ),
+                                    isLoading = false
+                                )
+                            }
+
+                            is RequestResult.Loading -> {
+                                _state.value = _state.value.copy(
+                                    articles = sortArticles(
+                                        result.data ?: emptyList(),
+                                        _filterState.value
+                                    ),
+                                    isLoading = true
+                                )
+                            }
+
+                            is RequestResult.Error -> {}
+                        }
+                    }
+                }
+            }
         }
     }
 

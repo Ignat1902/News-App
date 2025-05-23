@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">NewsAggregator</string>
     <string name="news_cover_content_desc">News cover</string>
+    <string name="search_hint_text">Search in the news...</string>
 </resources>

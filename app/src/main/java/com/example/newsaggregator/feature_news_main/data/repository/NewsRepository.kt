@@ -5,6 +5,7 @@ import com.example.newsaggregator.feature_news_main.data.datasource.local.NewsDa
 import com.example.newsaggregator.feature_news_main.data.datasource.remote.NewsApi
 import com.example.newsaggregator.feature_news_main.data.datasource.remote.models.ArticleDto
 import com.example.newsaggregator.feature_news_main.data.repository.models.Article
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
@@ -49,6 +50,19 @@ class NewsRepository @Inject constructor(
 
         val newNews = database.newsDao.getNewsWithCategories().map { it.toArticle() }
         emit(RequestResult.Success(newNews))
+    }
+
+    fun searchNews(query: String?): Flow<RequestResult<List<Article>>> = flow {
+        emit(RequestResult.Loading())
+        delay(500L)
+
+        val localNews = if (query.isNullOrBlank()) {
+            database.newsDao.getNewsWithCategories()
+        } else {
+            database.newsDao.searchNews(query)
+        }.map { it.toArticle() }
+
+        emit(RequestResult.Success(localNews))
     }
 
     private suspend fun saveNewsAndCategoryToDatabase(data: List<ArticleDto>) {

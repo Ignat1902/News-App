@@ -34,4 +34,14 @@ interface NewsDao {
         clearNews()
     }
 
+    @Transaction
+    @Query(
+        """
+    SELECT * FROM News
+    WHERE title LIKE '%' || :query || '%'
+       OR description LIKE '%' || :query || '%'
+    """
+    )
+    suspend fun searchNews(query: String): List<ArticleWithCategories>
+
 }
