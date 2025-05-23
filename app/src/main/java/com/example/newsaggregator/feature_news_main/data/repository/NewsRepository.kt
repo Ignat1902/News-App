@@ -12,8 +12,8 @@ import java.io.IOException
 import javax.inject.Inject
 
 class NewsRepository @Inject constructor(
-    val newsApi: NewsApi,
-    val database: NewsDatabase,
+    private val newsApi: NewsApi,
+    private val database: NewsDatabase,
 ) {
     fun getNews(query: String?): Flow<RequestResult<List<Article>>> = flow {
         emit(RequestResult.Loading())
